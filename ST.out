@@ -1,0 +1,14 @@
+"PZB" <--> 11
+"none" <--> 5
+real_speed <--> 0
+speed_limit <--> 2
+"inductor" <--> 8
+full_stop <--> 4
+pzb_button <--> 7
+30 <--> 3
+0 <--> 1
+1 <--> 13
+2 <--> 9
+"PZB_button" <--> 10
+inductor <--> 6
+"release" <--> 12
