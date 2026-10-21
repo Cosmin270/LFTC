@@ -2,16 +2,18 @@
 
 A scanner for the Locomotive DSL (Lab 1), written with **flex**. It reads a source program and produces the **Program Internal Form (PIF)**, the **Symbol Table (ST)**, and a list of **lexical errors**.
 
+[Github repository](https://github.com/Cosmin270/LFTC)
+
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `loco.l` | flex specification: token rules, error rules, `main` |
-| `SymbolTable.h/.c` | Symbol table, implemented as a hash table |
-| `Pif.h/.c` | Program Internal Form, implemented as a dynamic array |
-| `program.loco` | Lexically correct sample program |
-| `p_err.loco` | Sample program with lexical errors |
-| `PIF.out`, `ST.out` | Output of the last run |
+| File                | Purpose                                               |
+| ------------------- | ----------------------------------------------------- |
+| `loco.l`            | flex specification: token rules, error rules, `main`  |
+| `SymbolTable.h/.c`  | Symbol table, implemented as a hash table             |
+| `Pif.h/.c`          | Program Internal Form, implemented as a dynamic array |
+| `program.loco`      | Lexically correct sample program                      |
+| `p_err.loco`        | Sample program with lexical errors                    |
+| `PIF.out`, `ST.out` | Output of the last run                                |
 
 ## Build and run
 
@@ -25,15 +27,15 @@ The PIF goes to `PIF.out` and the ST to `ST.out`. Lexical errors print on the co
 
 ## Token classification
 
-| Category | Rule | PIF entry |
-|----------|------|-----------|
-| Keywords | 62 reserved words of the language (`var`, `if`, `brake`, `PZB`, …) | `<keyword> -1` |
-| Operators | `== != <= >= \|\| && .. = < > ! + - * / %` | `<operator> -1` |
-| Separators | `( ) [ ] : ; , .` | `<separator> -1` |
-| Identifiers | `letter (letter \| digit \| _)*` | `IDENTIFIER <ST position>` |
-| Integer constants | `digit+` | `CONSTANT <ST position>` |
-| Real constants | `digit+ . digit+` | `CONSTANT <ST position>` |
-| String constants | `" string_char* "` (letters, digits, space, `_ - + . , : ; ! ? ( ) / % # = < >`) | `CONSTANT <ST position>` |
+| Category          | Rule                                                                             | PIF entry                  |
+| ----------------- | -------------------------------------------------------------------------------- | -------------------------- |
+| Keywords          | 62 reserved words of the language (`var`, `if`, `brake`, `PZB`, …)               | `<keyword> -1`             |
+| Operators         | `== != <= >= \|\| && .. = < > ! + - * / %`                                       | `<operator> -1`            |
+| Separators        | `( ) [ ] : ; , .`                                                                | `<separator> -1`           |
+| Identifiers       | `letter (letter \| digit \| _)*`                                                 | `IDENTIFIER <ST position>` |
+| Integer constants | `digit+`                                                                         | `CONSTANT <ST position>`   |
+| Real constants    | `digit+ . digit+`                                                                | `CONSTANT <ST position>`   |
+| String constants  | `" string_char* "` (letters, digits, space, `_ - + . , : ; ! ? ( ) / % # = < >`) | `CONSTANT <ST position>`   |
 
 Keyword rules come before the identifier rule, so a word like `while` is a keyword. Flex also picks the longest match, so `real_speed` is one identifier and not `real` + `_speed`. Two-character operators (`==`, `..`, …) are listed before the one-character ones.
 
@@ -41,12 +43,12 @@ Keyword rules come before the identifier rule, so a word like `while` is a keywo
 
 Each error is reported with its line number, and scanning continues:
 
-| Error | Example |
-|-------|---------|
-| Identifier starting with a digit | `1speed` |
-| Unterminated string | `"door open;` |
-| Character not allowed in a string | `"a@b"` |
-| Illegal character | `$`, `@`, `&` |
+| Error                             | Example       |
+| --------------------------------- | ------------- |
+| Identifier starting with a digit  | `1speed`      |
+| Unterminated string               | `"door open;` |
+| Character not allowed in a string | `"a@b"`       |
+| Illegal character                 | `$`, `@`, `&` |
 
 ## Symbol Table – hash table
 
