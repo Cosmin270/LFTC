@@ -1,0 +1,35 @@
+var real_speed : int = 0;
+var speed_limit : int = 30;
+var full_stop : string = "none";
+var inductor : string = "none";
+var pzb_button : string = "none";
+
+pantograph(up);
+breaker(close);
+compressor(start);
+lights(high);
+direction(forward);
+brake(primary, release);
+PZB(U);
+traction(30);
+
+when alarm(PZB):
+  read("inductor", inductor);
+  wait(2);
+  read("PZB_button", pzb_button);
+  if pzb_button == "none" || pzb_button != inductor:
+    brake(primary, emergency);
+    full_stop = "PZB";
+  end
+end
+
+while true:
+  if full_stop == "PZB":
+    read("PZB_button", pzb_button);
+    if pzb_button == "release":
+      brake(primary, release);
+      full_stop = "none";
+    end
+  end
+  wait(1);
+end

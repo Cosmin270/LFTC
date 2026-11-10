@@ -1,0 +1,39 @@
+var real_speed : real = 0.0;
+var speed_limit : int = 80;
+var target_speed : int = 0;
+var axle_temp : real[6];
+var pressed : bool = false;
+
+when real_speed > speed_limit + 5:
+brake(primary, service3);
+log("overspeed");
+end
+
+when axle_temp[0] > 90.0 || axle_temp[1] > 90.0 || axle_temp[2] > 90.0 || axle_temp[3] > 90.0 || axle_temp[4] > 90.0 || axle_temp[5] > 90.0:
+alarm(Fire);
+emergency_stop();
+end
+
+# --- wheelslip ---
+
+when alarm(WheelSlip):
+sand();
+end
+
+# --- DSV braking ---
+
+when alarm(DSV):
+wait(2.5);
+read("dsv", pressed);
+if !pressed:
+brake(primary, emergency);
+end
+end
+
+# --- main loop ---
+
+while true:
+read("speed_sensor", real_speed);
+wait(0.5);
+end
+

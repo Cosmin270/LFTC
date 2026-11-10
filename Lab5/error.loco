@@ -1,0 +1,7 @@
+var 1speed : int = 4;
+var msg : string = "a@b";
+var x : int = 2 $ 4;
+var y : int = 007;
+var z : real = 1.2.3;
+var _tmp : int = 0;
+log("door open);

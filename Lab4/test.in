@@ -1,0 +1,6 @@
+states: s
+alphabet: a
+initial: s
+final: s
+transitions:
+s a s
